@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://duacm805wld6m"]
+
+[ext_resource type="Script" uid="uid://dgvoehl6j8hm1" path="res://scripts/game_manager.gd" id="1_70yv6"]
+
+[node name="GameManager" type="Node" unique_id=1323455614]
+script = ExtResource("1_70yv6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1007656667]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=916944739]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1668562071]
+layout_mode = 2
+
+[node name="StatDisplay" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=783976645]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ActionButtons" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=483999771]
+layout_mode = 2
+alignment = 1
+
+[node name="TrainButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=234643091]
+layout_mode = 2
+text = "Train"
+
+[node name="StudyButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=1921204131]
+layout_mode = 2
+text = "Study"
+
+[node name="RestButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=1586710488]
+layout_mode = 2
+text = "Rest"
+
+[node name="EndTurnButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=702840023]
+layout_mode = 2
+text = "End Turn"
