@@ -14,29 +14,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=1668562071]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer" unique_id=1670345343]
 layout_mode = 2
 
-[node name="StatDisplay" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=783976645]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer" unique_id=1668562071]
+layout_mode = 2
+
+[node name="StatDisplay" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer" unique_id=783976645]
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="ActionButtons" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=483999771]
+[node name="LogDisplay" type="RichTextLabel" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1085083493]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="ActionButtons" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer" unique_id=483999771]
 layout_mode = 2
 alignment = 1
 
-[node name="TrainButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=234643091]
+[node name="TrainButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/ActionButtons" unique_id=234643091]
 layout_mode = 2
 text = "Train"
 
-[node name="StudyButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=1921204131]
+[node name="StudyButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/ActionButtons" unique_id=1921204131]
 layout_mode = 2
 text = "Study"
 
-[node name="RestButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/ActionButtons" unique_id=1586710488]
+[node name="RestButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/ActionButtons" unique_id=1586710488]
 layout_mode = 2
 text = "Rest"
 
-[node name="EndTurnButton" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=702840023]
+[node name="EndTurnButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer" unique_id=702840023]
 layout_mode = 2
 text = "End Turn"
