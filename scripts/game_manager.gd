@@ -1,11 +1,7 @@
 extends Node
 
-
-# 1. defining the player variables 
-var current_turn: int = 1
-var energy: int = 100
-var gold: int = 50
-var exposure: int = 10 
+#create an instance of the playerdata class 
+var stats: PlayerData = PlayerData.new()
 
 #reference it to the UI labels so i can update the text on screen 
 #when in doubt of a path: drag the node from tree into script by holding CTRL
@@ -24,48 +20,51 @@ func _ready() -> void:
 	
 	update_ui_text()
 	
-
+#the view: this function takes data from 'stats' and plasters in on screen 
 func update_ui_text():
 	# %d means "insert an integer here" the array at the end fills them in order 
-	stat_display.text = "DAY: %d\nENERGY: %d/100\nGOLD: %d\nGLOAM EXPOSURE: %d%%" % [current_turn, energy, gold, exposure]
+	stat_display.text = "DAY: %d\nENERGY: %d/100\nGOLD: %d\nGLOAM EXPOSURE: %d%%" % [
+		stats.current_turn,
+		stats.energy,
+		stats.gold,
+		stats.exposure
+	]
 	
 	#if energy is less than 20, the button automatically disables itself. 
-	train_button.disabled = (energy < 20)
-	study_button.disabled = (energy < 20)
+	train_button.disabled = (stats.energy < 20)
+	study_button.disabled = (stats.energy < 20)
 	
 #handling button clicks: 
+#buttons will not do math when we made PlayerData. it asks if an action is allowed 
 func _on_train_button_pressed():
-	if energy >=20: 
-		energy -= 20
-		
+	if stats.spend_energy(20):
+		stats.gain_gold(15) #tell brain what happened 
+		log_display.text = "worked at the docks, earned gold"
 		#randomization, roll a 100-sided die 
-		var roll: int = randi_range(1,100)
-		
-		if roll > 80: 
-			gold += 50
-			exposure += 5
-			log_display.text = "CRITICAL FIND! discover hidden cache of coins (+50 Gold)"
-		elif roll < 20:
-			exposure += 25
-			log_display.text = "DANGER: a gust of wind blew a pocket of stagnant Gloam right into your face (+25% Exposure)"
-		else:
-			exposure += 10
-			gold += 15
-			log_display.text = "You made steady progress mapping out the perimeter. The air was heavy. "
+		#var roll: int = randi_range(1,100)
+		#if roll > 80: 
+			#gold += 50
+			#exposure += 5
+			#log_display.text = "CRITICAL FIND! discover hidden cache of coins (+50 Gold)"
+		#elif roll < 20:
+			#exposure += 25
+			#log_display.text = "DANGER: a gust of wind blew a pocket of stagnant Gloam right into your face (+25% Exposure)"
+		#else:
+			#exposure += 10
+			#gold += 15
+			#log_display.text = "You made steady progress mapping out the perimeter. The air was heavy. "
 		update_ui_text() 
 		
 func _on_study_button_pressed():
-	if energy >=20: 
-		energy -= 20
-		exposure += 10
-		print("studied ruins, exposure rose")
+	if stats.spend_energy(20):
+		stats.increase_exposure(10)
+		log_display.text = "Studied the ruins map. Exposure rose"
 		update_ui_text() 
 		
 		
 #advance the state 
 func _on_end_turn_button_pressed(): 
-	current_turn += 1
-	energy = 100 # reset the energy for the new turn 
-	print("A new day")
+	stats.advance_day()
+	log_display.text = "A new day dawns..."
 	update_ui_text()
 	
