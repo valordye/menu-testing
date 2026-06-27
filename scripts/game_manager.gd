@@ -37,8 +37,21 @@ func update_ui_text():
 func _on_train_button_pressed():
 	if energy >=20: 
 		energy -= 20
-		gold += 15
-		log_display.text = "you spent the afternoon hauling old crates, +15 gold"
+		
+		#randomization, roll a 100-sided die 
+		var roll: int = randi_range(1,100)
+		
+		if roll > 80: 
+			gold += 50
+			exposure += 5
+			log_display.text = "CRITICAL FIND! discover hidden cache of coins (+50 Gold)"
+		elif roll < 20:
+			exposure += 25
+			log_display.text = "DANGER: a gust of wind blew a pocket of stagnant Gloam right into your face (+25% Exposure)"
+		else:
+			exposure += 10
+			gold += 15
+			log_display.text = "You made steady progress mapping out the perimeter. The air was heavy. "
 		update_ui_text() 
 		
 func _on_study_button_pressed():
