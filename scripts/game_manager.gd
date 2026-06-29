@@ -6,17 +6,31 @@ var stats: PlayerData = PlayerData.new()
 #reference it to the UI labels so i can update the text on screen 
 #when in doubt of a path: drag the node from tree into script by holding CTRL
 @onready var stat_display: Label = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/StatDisplay
-@onready var train_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/ActionButtons/TrainButton
-@onready var study_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/ActionButtons/StudyButton
 @onready var end_turn_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/EndTurnButton
 @onready var log_display: RichTextLabel = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LogDisplay
 
+#action buttons 
+@onready var train_button: Button = %TrainButton
+@onready var study_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer/StudyButton
+
+
+#Location Panel Reference
+@onready var karsin_panel: VBoxContainer = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/KarsinPanel
+@onready var scarsind_panel: VBoxContainer = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel
+
+#navigation References
+@onready var travel_to_ruins_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/KarsinPanel/ActionButtons/TravelToRuinsButton
+@onready var travel_to_town_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer/TravelToTownButton
 
 func _ready() -> void: 
 	#manual signal connection 
 	train_button.pressed.connect(_on_train_button_pressed)
 	study_button.pressed.connect(_on_study_button_pressed)
 	end_turn_button.pressed.connect(_on_end_turn_button_pressed)
+	
+	#connect navigation buttons 
+	travel_to_ruins_button.pressed.connect(_on_travel_to_ruins_pressed)
+	travel_to_town_button.pressed.connect(_on_travel_to_town_pressed)
 	
 	update_ui_text()
 	
@@ -34,6 +48,18 @@ func update_ui_text():
 	train_button.disabled = (stats.energy < 20)
 	study_button.disabled = (stats.energy < 20)
 	
+#navigation logic 
+func _on_travel_to_ruins_pressed() -> void:
+	#Hide the town UI, show ruins UI
+	karsin_panel.visible = false 
+	scarsind_panel.visible = true 
+	log_display.text = "Stepped past iron gates of Karsin, entering Scarsind"
+	
+func _on_travel_to_town_pressed() -> void: 
+	scarsind_panel.visible = false 
+	karsin_panel.visible = true 
+	log_display.text = "You retreat back through the safety gates."
+
 #handling button clicks: 
 #buttons will not do math when we made PlayerData. it asks if an action is allowed 
 func _on_train_button_pressed():
