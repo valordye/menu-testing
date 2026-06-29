@@ -11,8 +11,7 @@ var stats: PlayerData = PlayerData.new()
 
 #action buttons 
 @onready var train_button: Button = %TrainButton
-@onready var study_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer/StudyButton
-
+@export var study_button: Button
 
 #Location Panel Reference
 @onready var karsin_panel: VBoxContainer = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/KarsinPanel
@@ -21,6 +20,12 @@ var stats: PlayerData = PlayerData.new()
 #navigation References
 @onready var travel_to_ruins_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/KarsinPanel/ActionButtons/TravelToRuinsButton
 @onready var travel_to_town_button: Button = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer/TravelToTownButton
+
+#modal nodes 
+@onready var modal_overlay: ColorRect = %ModalOverlay
+@onready var popup_text: Label = %PopupText
+@onready var close_popup_button: Button = %ClosePopupButton
+
 
 func _ready() -> void: 
 	#manual signal connection 
@@ -31,6 +36,9 @@ func _ready() -> void:
 	#connect navigation buttons 
 	travel_to_ruins_button.pressed.connect(_on_travel_to_ruins_pressed)
 	travel_to_town_button.pressed.connect(_on_travel_to_town_pressed)
+	
+	#connect modal close button 
+	close_popup_button.pressed.connect(_on_close_popup_pressed)
 	
 	update_ui_text()
 	
@@ -85,9 +93,27 @@ func _on_study_button_pressed():
 	if stats.spend_energy(20):
 		stats.increase_exposure(10)
 		log_display.text = "Studied the ruins map. Exposure rose"
+		
+		#trigger modal: check if exposure is getting bad 
+		if stats.exposure >= 50:
+			trigger_silas_event()
+		
 		update_ui_text() 
 		
+#function to activate overlay shield 
+func trigger_silas_event() -> void: 
+	popup_text.text = "SILAS blocks your path, yo gimme ur money twin \n(Silas takes 20 Gold gng)"
+	stats.gold = max(0, stats.gold - 20) #penalty logic 
+	
+	#open modal window 
+	modal_overlay.visible = true 
 		
+func _on_close_popup_pressed() -> void: 
+	#hide the shield, returning input focus 
+	modal_overlay.visible = false
+	log_display.text = "Silas scuttles back into guild hall"
+	update_ui_text()
+
 #advance the state 
 func _on_end_turn_button_pressed(): 
 	stats.advance_day()
