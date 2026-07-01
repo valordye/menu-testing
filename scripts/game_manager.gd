@@ -46,6 +46,9 @@ func _ready() -> void:
 	#connect modal close button 
 	close_popup_button.pressed.connect(_on_close_popup_pressed)
 	
+	#signal connection
+	stats.dangerous_exposure_reached.connect(trigger_silas_event)
+	
 	update_ui_text()
 	
 #the view: this function takes data from 'stats' and plasters in on screen 
@@ -101,8 +104,8 @@ func _on_study_button_pressed():
 		log_display.text = "Studied the ruins map. Exposure rose"
 		
 		#trigger modal: check if exposure is getting bad 
-		if stats.exposure >= 50:
-			trigger_silas_event()
+		#if stats.exposure >= 50:
+		#	trigger_silas_event()
 		
 		update_ui_text() 
 		
