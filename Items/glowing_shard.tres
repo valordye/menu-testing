@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ScavengeItem" format=3 uid="uid://d1j7mk5mbtk6y"]
+
+[ext_resource type="Script" uid="uid://do403nem0fokq" path="res://scripts/ScavengeItem.gd" id="1_ka07j"]
+
+[resource]
+script = ExtResource("1_ka07j")
+item_name = "Heart-Glass Shard"
+gold_value = 15
+exposure_risk = 2
+discovery_text = "You spot a warm amber gleam under a pile of rubble. It's a pristine fragment of old ward-glass. "
+metadata/_custom_type_script = "uid://do403nem0fokq"

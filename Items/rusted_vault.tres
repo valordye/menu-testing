@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ScavengeItem" format=3 uid="uid://d13ar7nr4dtea"]
+
+[ext_resource type="Script" uid="uid://do403nem0fokq" path="res://scripts/ScavengeItem.gd" id="1_gpv1w"]
+
+[resource]
+script = ExtResource("1_gpv1w")
+item_name = "Rusted Lockbox"
+gold_value = 60
+exposure_risk = 25
+discovery_text = "You smash open a rusted metal locker and pull out a handful of old copper tokens!"
+metadata/_custom_type_script = "uid://do403nem0fokq"

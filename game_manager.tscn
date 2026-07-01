@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://duacm805wld6m"]
 
 [ext_resource type="Script" uid="uid://dgvoehl6j8hm1" path="res://scripts/game_manager.gd" id="1_70yv6"]
+[ext_resource type="Resource" uid="uid://d13ar7nr4dtea" path="res://Items/rusted_vault.tres" id="2_o2178"]
+[ext_resource type="Resource" uid="uid://d1j7mk5mbtk6y" path="res://Items/glowing_shard.tres" id="3_d5upp"]
 
 [node name="GameManager" type="Node" unique_id=1323455614 node_paths=PackedStringArray("study_button")]
 script = ExtResource("1_70yv6")
 study_button = NodePath("CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer/StudyButton")
+item_1 = ExtResource("2_o2178")
+item_2 = ExtResource("3_d5upp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1007656667]
 
@@ -77,6 +81,12 @@ text = "Study"
 [node name="TravelToTownButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer" unique_id=250502471]
 layout_mode = 2
 text = "Travel To Town"
+
+[node name="ScavengeButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/ScarsindPanel/HBoxContainer" unique_id=213860272]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Scavenge
+"
 
 [node name="EndTurnButton" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer" unique_id=702840023]
 layout_mode = 2

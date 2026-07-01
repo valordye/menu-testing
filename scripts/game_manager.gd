@@ -12,6 +12,7 @@ var stats: PlayerData = PlayerData.new()
 #action buttons 
 @onready var train_button: Button = %TrainButton
 @export var study_button: Button
+@onready var scavenge_button: Button = %ScavengeButton
 
 #Location Panel Reference
 @onready var karsin_panel: VBoxContainer = $CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/LocationManager/KarsinPanel
@@ -26,12 +27,17 @@ var stats: PlayerData = PlayerData.new()
 @onready var popup_text: Label = %PopupText
 @onready var close_popup_button: Button = %ClosePopupButton
 
+#create inspector slots for data template cards
+@export var item_1: ScavengeItem
+@export var item_2: ScavengeItem
+
 
 func _ready() -> void: 
 	#manual signal connection 
 	train_button.pressed.connect(_on_train_button_pressed)
 	study_button.pressed.connect(_on_study_button_pressed)
 	end_turn_button.pressed.connect(_on_end_turn_button_pressed)
+	scavenge_button.pressed.connect(_on_scavenge_button_pressed)
 	
 	#connect navigation buttons 
 	travel_to_ruins_button.pressed.connect(_on_travel_to_ruins_pressed)
@@ -99,6 +105,27 @@ func _on_study_button_pressed():
 			trigger_silas_event()
 		
 		update_ui_text() 
+		
+func _on_scavenge_button_pressed() -> void: 
+	if stats.spend_energy(30):
+		
+		#50/50 chance to find item 1 or 2
+		var found_item: ScavengeItem = item_1 if randf() > 0.5 else item_2
+		
+		#get the numbers dynamically from data templates 
+		stats.gain_gold(found_item.gold_value)
+		stats.increase_exposure(found_item.exposure_risk)
+		
+		#plaster the custom text on screen
+		log_display.text = "FOUND: %s\n%s (+%d Gold, +%d%% Exposure)" % [
+			found_item.item_name,
+			found_item.discovery_text,
+			found_item.gold_value,
+			found_item.exposure_risk
+		]
+		
+		update_ui_text()
+		
 		
 #function to activate overlay shield 
 func trigger_silas_event() -> void: 
